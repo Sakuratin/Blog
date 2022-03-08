@@ -1,0 +1,75 @@
+{extend name="base" /}
+{block name='link'}
+<link rel="stylesheet" href="__STATIC__/css/editormd.css" />
+{/block}
+{block name="main"}
+<h2>编辑文章</h2>
+
+<div class="row">
+
+    <div class="col-md-9">
+        <div class="post-title">
+            <input type="text" id="post-create-title" placeholder="添加标题" value="{$title}" />
+        </div>
+
+        <div id="editor">
+            <textarea style="display:none;" name="$id-html-code">{$markdown}</textarea>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel">
+            <div class="panel-heading">
+                <strong>发布</strong>
+            </div>
+            <div class="panel-body">
+                <div class="option">
+                    <span>可见性: </span>
+                    <strong>公开</strong> <input type="radio" value="1" name="visible" {if condition="$visible == 1"} checked {else /} {/if} />
+                    <strong>隐藏</strong> <input type="radio" value="0" name="visible" {if condition="$visible == 0"} checked {else /} {/if} />
+                </div>
+                <div class="option">
+                    <span>文章密码: </span>
+                    <input type="text" name="lockPass" placeholder="为空则不需要密码" value="{$lock}" />
+                </div>
+            </div>
+
+            <div class="panel-footer clearfix">
+                <button class="btn post-button right" target="{:url('Admin/Article/update')}/{$id}" id="post-create-btn" style="background-color: #007cba;color: white">更新</button>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-heading">
+                <strong>分类目录</strong>
+            </div>
+            <div class="panel-body">
+                <div class="option">
+                    <ul>
+                        <li><input type="radio" name="category" value="学习" {if condition="$category == '学习'"} checked {else /} {/if}>学习</li>
+                        <li><input type="radio" name="category" value="生活" {if condition="$category == '生活'"} checked {else /} {/if}>生活</li>
+                        <li><input type="radio" name="category" value="影视" {if condition="$category == '影视'"} checked {else /} {/if}>影视</li>
+                        <li><input type="radio" name="category" value="美食" {if condition="$category == '美食'"} checked {else /} {/if}>美食</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name='script'}
+
+<script src="__STATIC__/js/jquery.min.js"></script>
+<script src="__STATIC__/js/editormd.min.js"></script>
+<script type="text/javascript">
+    var editor = editormd("editor", {
+        width  : "100%",
+        height : "500px",
+        path   : '__STATIC__' + "/js/lib/",
+        saveHTMLToTextarea : true
+    });
+
+</script>
+{/block}

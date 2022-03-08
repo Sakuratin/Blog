@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="__STATIC__/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__STATIC__/css/admin.css">
+    {block name='link'}{/block}
+    {block name="style"}{/block}
+</head>
+<body>
+
+<div style="position: fixed;height: 50px;width: 100%;background: #23282d;padding-right: 50px;z-index: 99">
+    <span style="font-size: 18px;line-height: 50px;margin-left: 25px;color: white">赵婷婷的小窝</span>
+    <div style="float: right;line-height: 50px;padding-right: 10px;color: white">
+        <img src="__STATIC__/images/avatar.png" style="width: 35px;margin-right: 5px" alt="">
+        <span style="font-size: 15px">嗨，{$Request.session.user}</span>
+
+        <a href="{:url('Index/Index/index')}" style="color: white;text-decoration: underline">访问首页</a>
+        <a href="{:url('Admin/Logout/logout')}" style="color: white;text-decoration: underline">退出</a>
+    </div>
+</div>
+
+<div class="container clearfix row">
+
+    <div class="col-md-2" id="left-menu">
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="{:url('Admin/Index/index')}"><span class="glyphicon glyphicon-pushpin"></span>仪表盘</a></li>
+
+            <li class="{block name='article'}{/block}"><a href="{:url('Admin/Article/index')}"><span class="glyphicon glyphicon-book"></span>文章</a></li>
+            <li class="child-item {block name='article_all'}{/block}"><a href="{:url('Admin/Article/index')}">所有文章</a></li>
+            <li class="child-item {block name='article_create'}{/block}"><a href="{:url('Admin/Article/create')}">写文章</a></li>
+
+
+            <li class="{block name='photos'}{/block}"><a href="{:url('Admin/Photo/index')}"><span class="glyphicon glyphicon-film"></span>相册管理</a></li>
+
+            <li class="{block name='comment'}{/block}"><a href="{:url('Admin/Comments/index')}"><span class="glyphicon glyphicon-comment"></span>评论</a></li>
+            <li class="child-item {block name='sensitive'}{/block}"><a href="{:url('Admin/Sensitive/index')}">屏蔽词管理</a></li>
+
+            <li class="{block name='user'}{/block}"><a href="{:url('Admin/User/index')}"><span class="glyphicon glyphicon-user"></span>用户管理</a></li>
+
+            <li><a href="{:url('Admin/Setting/index')}"><span class="glyphicon glyphicon-cog"></span>设置</a></li>
+            <li class="child-item"><a href="{:url('Admin/Setting/index')}">常规设置</a></li>
+            <li class="child-item"><a href="{:url('Admin/Setting/about')}">关于</a></li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-10 clearfix" id="right-body">
+
+
+        {block name="main"}{/block}
+    </div>
+</div>
+<footer>
+
+</footer>
+
+<script src="__STATIC__/js/jquery.min.js"></script>
+<script src="__STATIC__/js/core.js"></script>
+{block name="script"}{/block}
+</body>
+</html>

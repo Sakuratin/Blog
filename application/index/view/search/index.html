@@ -1,0 +1,30 @@
+{extend name="base" /}
+
+{block name="style"}
+<style>
+    .archive-item>a {
+        color: black;
+    }
+
+    .archive-item>a:hover {
+        color: black;
+    }
+</style>
+{/block}
+
+{block name="main"}
+<div class="leave-header-margin">
+    <div id="archive">
+        <ul>
+
+            {foreach $data as $item }
+            <li class="archive-item">
+                <div class="archive-date">{$item.create_time}</div>
+                <a href="{:url('Index/Article/index')}/{$item.id}">{$item.title}</a>
+            </li>
+            {/foreach}
+
+        </ul>
+    </div>
+</div>
+{/block}

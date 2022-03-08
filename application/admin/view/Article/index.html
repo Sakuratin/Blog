@@ -1,0 +1,94 @@
+{extend name="base" /}
+{block name='article_all'}active{/block}
+{block name="main"}
+<h2>文章管理</h2>
+<div>
+    <a class="btn post-button" id="create-post" href="{:url('Admin/Article/create')}">写文章</a>
+</div>
+<div class="post-operation clearfix">
+    <div class="left">
+        <ul class="pagination">
+            <li><a href="#">&laquo;</a></li>
+
+            {for start="1" end="$pages"}
+            <li><a href="#">{$i}</a></li>
+            {/for}
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </div>
+    <div class="right" id="search">
+        <input type="text" />
+        <button class="btn post-button">搜索</button>
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>标题</th>
+        <th>分类</th>
+        <th>评论数</th>
+        <th>可见</th>
+        <th>日期</th>
+    </tr>
+    </thead>
+    <tbody>
+    {foreach $articles as $article}
+    <tr class="article-item">
+        <td>
+            {$article.title}
+            <div class="article-btn">
+                <a class="btn btn-link post-edit" href="{:url('article/edit')}/{$article.id}">编辑</a>
+                <a class="btn btn-link post-delete" href="{:url('Admin/Article/delete')}/{$article.id}" onclick="return deleteConfirm()">删除</a>
+            </div>
+        </td>
+        <td>{$article.category}</td>
+        <td>1</td>
+        <td style="padding-left: 15px">
+            {if condition="$article.visible == 1"}
+            <span style="color: #57ad06" class="glyphicon glyphicon-ok"></span>
+            {else /}
+            <span style="color: #fc5858" class="glyphicon glyphicon-remove"></span>
+            {/if}
+        </td>
+        <td>{$article.create_time}</td>
+    </tr>
+    {/foreach}
+
+    </tbody>
+</table>
+{/block}
+{block name="script"}
+<script>
+
+    $(".article-item").mouseenter(function (e) {
+        if(e.target.querySelector(".post-edit")) {
+            e.target.querySelector(".post-edit").style.visibility = "inherit"
+        }
+        if(e.target.querySelector(".post-delete")) {
+            e.target.querySelector(".post-delete").style.visibility = "inherit"
+        }
+    })
+
+    $(".article-item").mouseleave(function (e) {
+        if(e.target.querySelector(".post-edit")) {
+            e.target.querySelector(".post-edit").style.visibility = "hidden"
+        }
+        if(e.target.querySelector(".post-delete")) {
+            e.target.querySelector(".post-delete").style.visibility = "hidden"
+        }
+    })
+
+    function deleteConfirm() {
+        return confirm("确认删除该文章吗？");
+
+    }
+
+    // $(".article-btn>.post-delete").click((e) => {
+    //     if(confirm("确认删除该文章?")) {
+    //         alert(e.target.attributes.target.value)
+    //         location.href = e.target.attributes.target.value;
+    //     }
+    // })
+
+</script>
+{/block}

@@ -1,0 +1,53 @@
+{extend name="base" /}
+{block name='user'}active{/block}
+
+{block name="style"}
+<style>
+    .user-info {
+        margin-top: 10px;
+        text-align: left;
+    }
+    .user-info>label {
+        font-size: 17px;
+    }
+
+    .user-info>input {
+        padding: 3px 5px;
+        border:none;
+        border-bottom: 1px solid grey;
+        outline: none;
+    }
+</style>
+{/block}
+
+{block name="main"}
+<h2>用户管理</h2>
+<div style="margin-left: 20px;margin-top: 20px;display: inline-block;text-align: center">
+    <form action="{:url('Admin/User/update')}/{$user.id}" method="post">
+        <div class="user-info">
+            <label for="username">用户名: </label>
+            <input type="text" name="username" disabled="disabled" value="{$user.username}" id="username" />
+        </div>
+        <div class="user-info">
+            <label for="password">密&nbsp;&nbsp;&nbsp;码: </label>
+            <input type="password" name="password" value="{$user.password}" id="password" />
+        </div>
+        <div class="user-info">
+            <label for="email">邮&nbsp;&nbsp;&nbsp;箱: </label>
+            <input type="email" name="email" value="{$user.email}" id="email" />
+        </div>
+        <div class="user-info">
+            <label for="create_time">注册时间: </label>
+            <span id="create_time">{$user.create_time}</span>
+        </div>
+
+        <button class="btn btn-info" style="width: 200px;margin-top: 5px" type="submit">更新</button>
+    </form>
+</div>
+{/block}
+{block name="script"}
+<script>
+
+
+</script>
+{/block}

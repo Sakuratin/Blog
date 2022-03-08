@@ -1,0 +1,67 @@
+{extend name="base" /}
+{block name='comment'}active{/block}
+{block name="main"}
+<div class="post-operation clearfix">
+    <h2>评论</h2>
+    <div class="left">
+        <ul class="pagination">
+            <li><a href="#">&laquo;</a></li>
+            {for start="1" end="$pages"}
+            <li><a href="#">{$i}</a></li>
+            {/for}
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </div>
+    <div class="right" id="search">
+        <input type="text" />
+        <button class="btn post-button">搜索</button>
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>作者</th>
+        <th>评论</th>
+        <th>来源</th>
+        <th>日期</th>
+    </tr>
+    </thead>
+    <tbody>
+    {foreach $comments as $comment}
+        <tr class="comment-item">
+            <td>
+                {$comment.username}
+                <div>
+                    <a class="btn btn-link post-delete" href="{:url('Admin/Comments/delete')}/{$comment.id}" onclick="return deleteConfirm()">删除</a>
+                </div>
+            </td>
+            <td>{$comment.comment}</td>
+            <td>{$comment.atitle}</td>
+            <td>{$comment.create_time}</td>
+        </tr>
+    {/foreach}
+
+    </tbody>
+</table>
+{/block}
+
+{block name="script"}
+<script>
+    $(".comment-item").mouseenter(function (e) {
+        if(e.target.querySelector(".post-delete")) {
+            e.target.querySelector(".post-delete").style.visibility = "inherit"
+        }
+    })
+
+    $(".comment-item").mouseleave(function (e) {
+        if(e.target.querySelector(".post-delete")) {
+            e.target.querySelector(".post-delete").style.visibility = "hidden"
+        }
+    })
+
+    function deleteConfirm() {
+        return confirm("确认删除该文章吗？");
+
+    }
+</script>
+{/block}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="__STATIC__/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__STATIC__/css/style.css">
+    <script src="__STATIC__/js/jquery.min.js"></script>
+    <script src="__STATIC__/js/snowfall.jquery.min.js"></script>
+
+    {block name="style"}
+
+    {/block}
+</head>
+<body>
+<header class="navbar navbar-inverse" id="header-blog">
+    <div class="container">
+        <div class="collapse navbar-collapse bs-navbar-collapse row">
+            <div class="col-md-10">
+                <ul class="nav navbar-nav" id="menu-blog">
+                    <li class="current"><a href="{:url('Index/Index/index')}"><i class="fa fa-home"></i>首页</a></li>
+                    <li class=""><a href="{:url('Index/Archives/index')}"><i class="fa fa-archive"></i>归档</a></li>
+                    <li class=""><a href="{:url('Index/Index/category')}/学习"><i class="fa fa-archive"></i>学习笔记</a></li>
+                    <li class=""><a href="{:url('Index/Index/category')}/生活"><i class="fa fa-archive"></i>生活随想</a></li>
+                    <li class=""><a href="{:url('Index/Photo/index')}"><i class="fa fa-list"></i>相册</a></li>
+                    <li class=""><a href="{:url('Index/Index/about')}"><i class="fa fa-list"></i>关于</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2">
+                <ul class="nav navbar-nav">
+                    {if condition="$Request.session.user"}
+                        {if condition="$Request.session.isAdmin"}
+                            <li class="current"><a href="{:url('Admin/Index/index')}"><i class="fa fa-home"></i>管理后台</a></li>
+                        {else /}
+                            <li class="current" style="line-height: 50px;">
+                                <span>{$Request.session.user}</span>
+                                <a href="{:url('Index/Login/logout')}" style="display: inline"><i class="fa fa-home"></i>退出</a>
+                            </li>
+                        {/if}
+                    {else /}
+                        <li class="current"><a href="{:url('Index/Login/index')}"><i class="fa fa-home"></i>登陆</a></li>
+                        <li class="current"><a href="#"><i class="fa fa-home"></i>注册</a></li>
+                    {/if}
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container " id="blog-body">
+    {block name="main"}{/block}
+</div>
+<footer>
+
+</footer>
+<script>$(document).snowfall({
+    image: '__STATIC__/images/sakura01.png',
+    minSize: 13, maxSize:18, maxSpeed: 1.5, minSpeed: 0.8,
+    flakeCount: 10
+});</script>
+{block name="script"}
+{/block}
+</body>
+</html>

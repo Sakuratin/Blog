@@ -1,0 +1,49 @@
+{extend name="base" /}
+
+{block name='link'}
+<link rel="stylesheet" href="__STATIC__/css/editormd.css" />
+{/block}
+{block name="main"}
+<div>
+    <h2 style="display: inline-block">关于我</h2> <a id="postAbout" href="#" style="text-decoration: underline;font-size: 15px;position: relative;top: -2px" class="btn btn-link btn-primary">保存</a>
+</div>
+
+<div id="editor">
+    <textarea style="display:none;" name="$id-html-code">{$data.about}</textarea>
+</div>
+{/block}
+{block name='script'}
+
+<script src="__STATIC__/js/jquery.min.js"></script>
+<script src="__STATIC__/js/editormd.min.js"></script>
+<script type="text/javascript">
+    var editor = editormd("editor", {
+        width  : "100%",
+        height : "500px",
+        path   : '__STATIC__' + "/js/lib/",
+        saveHTMLToTextarea : true
+    });
+
+    $("#postAbout").click(e => {
+        let markdown = editor.getMarkdown()
+        let html = editor.getHTML()
+
+        $.ajax({
+            method: "post",
+            url: "{:url('Admin/Setting/about')}",
+            data: {
+                about: markdown,
+                aboutHtml: html
+            },
+            success: data => {
+                alert(data.message)
+            },
+            error: data => {
+                console.log(data)
+                alert("失败")
+            }
+        })
+    })
+
+</script>
+{/block}

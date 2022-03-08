@@ -1,0 +1,64 @@
+{extend name="base" /}
+{block name='photos'}active{/block}
+{block name="main"}
+<h2>相册管理</h2>
+<div>
+    <form action="{:url('admin/Photo/add')}" method="post">
+        <input type="text" name="category" placeholder="分类" style="height: 34px;top: -4px;position: relative;padding-left: 5px" />
+        <button class="btn post-button" id="create-post" type="submit">添加分类</button>
+
+    </form>
+</div>
+<div class="post-operation clearfix">
+    <div class="left">
+        <ul class="pagination">
+            <li><a href="#">&laquo;</a></li>
+
+            {for start="1" end="$pages"}
+            <li><a href="#">{$i}</a></li>
+            {/for}
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </div>
+    <div class="right" id="search">
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>分类标题</th>
+        <th>创建时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    {foreach $data as $item}
+    <tr class="article-item">
+        <td>
+            <a href="{:url('admin/Photo/photolist')}/{$item.id}">{$item.id}</a>
+        </td>
+        <td>
+            <a href="{:url('admin/Photo/photolist')}/{$item.id}">{$item.name}</a>
+
+        </td>
+        <td>
+            {$item.create_time}
+        </td>
+    </tr>
+    {/foreach}
+
+    </tbody>
+</table>
+{/block}
+{block name="script"}
+<script>
+
+
+
+    function deleteConfirm() {
+        return confirm("确认删除该文章吗？");
+
+    }
+
+</script>
+{/block}

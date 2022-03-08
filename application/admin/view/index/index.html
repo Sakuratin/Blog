@@ -1,0 +1,163 @@
+{extend name="base" /}
+{block name="main"}
+<h2>仪表盘</h2>
+
+
+
+<div class="panel-groups">
+<!--    <div class="panel" style="display: inline-block">-->
+<!--        <div id="echarts" style="width:600px; height:400px;"></div>-->
+<!--    </div>-->
+    <div class="panel">
+        <div class="panel-heading">
+            <strong>最近发布</strong>
+        </div>
+        <div class="panel-body" style="padding-left: 30px; padding-right: 30px;">
+            {foreach $articles as $article}
+            <div>
+                {$article.create_time} <a href="{:url('Index/Article/index')}/{$article.id}">《{$article.title}》</a>
+            </div>
+            {/foreach}
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-heading">
+            <strong>近期评论</strong>
+        </div>
+        <div class="panel-body" style="padding-left: 30px; padding-right: 30px;">
+            {foreach $comments as $comment}
+            <div>
+                由 {$comment.username} 在 <a href="{:url('Index/Article/index')}/{$comment.aid}">《{$comment.atitle}》</a> 中发布了评论
+            </div>
+            {/foreach}
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script src="__STATIC__/js/echarts.min.js"></script>
+<script>
+    var myChart = echarts.init(document.getElementById('echarts'));
+
+    var option = {
+        color: ['#80FFA5', '#00DDFF', '#FF0087', ],
+        title: {
+            text: '流量统计'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        legend: {
+            data: ['评论数', '文章数', '网站流量']
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '评论数',
+                type: 'line',
+                stack: '总量',
+                smooth: true,
+                lineStyle: {
+                    width: 0
+                },
+                showSymbol: false,
+                areaStyle: {
+                    opacity: 0.8,
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: 'rgba(128, 255, 165)'
+                    }, {
+                        offset: 1,
+                        color: 'rgba(1, 191, 236)'
+                    }])
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [140, 232, 101, 264, 90, 340, 250]
+            },
+            {
+                name: '文章数',
+                type: 'line',
+                stack: '总量',
+                smooth: true,
+                lineStyle: {
+                    width: 0
+                },
+                showSymbol: false,
+                areaStyle: {
+                    opacity: 0.8,
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: 'rgba(0, 221, 255)'
+                    }, {
+                        offset: 1,
+                        color: 'rgba(77, 119, 255)'
+                    }])
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [120, 282, 111, 234, 220, 340, 310]
+            },
+            {
+                name: '网站流量',
+                type: 'line',
+                stack: '总量',
+                smooth: true,
+                lineStyle: {
+                    width: 0
+                },
+                showSymbol: false,
+                areaStyle: {
+                    opacity: 0.8,
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: 'rgba(255, 0, 135)'
+                    }, {
+                        offset: 1,
+                        color: 'rgba(135, 0, 157)'
+                    }])
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [220, 402, 231, 134, 190, 230, 120]
+            }
+
+        ]
+    };
+
+    // use configuration item and data specified to show chart
+    myChart.setOption(option);
+</script>
+{/block}

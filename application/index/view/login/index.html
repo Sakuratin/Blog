@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+    <link rel="stylesheet" href="__STATIC__/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__STATIC__/css/style.css">
+    <style>
+
+        #toregister, #toforget {
+            color: #0000008f;
+            font-size: 14px;
+            position: relative;
+            top: 7px;
+            display: block;
+        }
+
+        #toregister:hover, #toforget:hover {
+            color: black;
+            cursor: pointer;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container " id="blog-body">
+    <div id="login">
+        <form action="#" class="form-signin">
+            <h1 class="h3 mb-3 font-weight-normal">登陆</h1>
+            <label for="inputUsername" class="sr-only">用户名</label>
+            <input type="text" id="inputUsername" class="form-control" placeholder="用户名/账号" required="" autofocus="">
+
+            <label for="inputPassword" class="sr-only">密码</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="密码" required="">
+            <button id="loginBtn" class="btn btn-lg btn-primary btn-block" target="{:url('Index/Index/index')}" type="button">登陆</button>
+            <a href="{:url('Index/Register/index')}" id="toregister" type="button">还没有账号？注册</a>
+            <a href="{:url('Index/Forget/index')}" id="toforget" type="button">忘记密码？</a>
+        </form>
+    </div>
+</div>
+<footer>
+
+</footer>
+
+<script src="__STATIC__/js/jquery.min.js"></script>
+<script src="__STATIC__/js/core.js"></script>
+</body>
+</html>

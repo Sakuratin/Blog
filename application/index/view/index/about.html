@@ -1,0 +1,80 @@
+{extend name="base" /}
+
+{block name="style"}
+<style>
+    .comments-count {
+        font-weight: 700;
+        padding: 5px 0;
+        border-bottom: 1px solid rgba(0,0,0,.05);
+        font-size: 13px;
+    }
+
+    #comments {
+        margin-top: 40px;
+        font-size: 16px;
+    }
+
+    .comment-text {
+        padding-left: 20px;
+    }
+
+    #comment-form {
+        font-size: 18px;
+        color: rgba(0,0,0,.44);
+        margin-top: 40px;
+    }
+
+    #comment-form label {
+        display: block;
+        margin-bottom: 3px;
+        cursor: pointer;
+    }
+
+    time {
+        color: rgba(0,0,0,.44);
+        font-style: italic;
+        font-size: 13px;
+        margin-left: 10px;
+    }
+
+    #comment-form>div {
+        margin-bottom: 10px;
+    }
+
+    #comment-form textarea {
+        resize: none;
+        width: 100%;
+        border: 1px rgba(0,0,0,.05) solid;
+        box-sizing: border-box;
+        padding: 10px;
+        border-radius: 3px;
+    }
+
+    #post-comment {
+        border: 2px solid #27ae60;
+        color: #27ae60;
+        background-color: #fff;
+        display: inline-block;
+        padding: 3px 15px;
+        border-radius: 3px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+</style>
+{/block}
+{block name="main"}
+<div class="leave-header-margin full">
+    <div id="post">
+        {$about}
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+    $("#post-comment").click(e => {
+
+    })
+</script>
+{/block}
+

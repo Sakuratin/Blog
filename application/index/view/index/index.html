@@ -1,0 +1,89 @@
+{extend name="base" /}
+
+{block name="style"}
+<style>
+    .list-group-item>a {
+        color: black;
+    }
+
+    .list-group-item>a:hover {
+        color: black;
+    }
+</style>
+{/block}
+
+{block name="main"}
+<div class="row leave-header-margin">
+    <div class="col-md-8">
+        {foreach $articles as $article}
+        <div class="article">
+            <div class="article-title article-font-md"><a href="{:url('Index/Article/index')}/{$article.id}">{$article.title}</a></div>
+            <div class="article-date">{$article.create_time}</div>
+            <div class="article-description" style="">
+                <p style="max-height: 100px;overflow-y: hidden;text-overflow: ellipsis;">{$article.description}</p>
+            </div>
+            <div class="article-footer"></div>
+        </div>
+        {/foreach}
+<!--        <div class="article">-->
+<!--            <div class="article-title article-font-md"><a href="{:url('Index/Article/index')}">书评《被前任看见一个人吃火锅》</a></div>-->
+<!--            <div class="article-date">2021/06/15</div>-->
+<!--            <div class="article-cover">-->
+<!--                <img src="__STATIC__/images/cover.jpeg" />-->
+<!--            </div>-->
+<!--            <div class="article-description" style="">-->
+<!--                <p>不看BG，但是被这本书吸引了，书名就是故事的开始。再往下看简介，又被这样一句话打动：那时候，他们年轻气盛。把尊严看得比一切重要，比爱重要。那时候，他们以为散就散了，总有新的爱到来。 Read More.</p>-->
+<!--            </div>-->
+<!--            <div class="article-footer"></div>-->
+<!--        </div>-->
+<!--        -->
+    </div>
+    <div class="col-md-4 leave-header-margin" id="sidebar">
+        <div class="panel sidebar-item author-info">
+            <div class="panel-heading text-center">
+                个人信息
+            </div>
+            <div class="panel-body">
+                <div class="text-center author-image">
+                    <img src="__STATIC__/images/avatar.png" width="140" height="140" alt="个人头像">
+                </div>
+                <div class="text-center">
+                    赵婷婷的小窝
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center;margin-bottom: 15px;margin-top: 10px;">
+            <form action="{:url('Index/Search/search')}" method="post">
+                <input type="text" name="text" placeholder="搜索内容" style="width: 200px;padding: 1px 7px">
+                <button style="padding: 1px 17px;background: #fac8c7;border: 1px solid #fac8c7;color: white;">搜索</button>
+            </form>
+        </div>
+
+        <div class="panel sidebar-item">
+            <div class="panel-heading">
+                热门文章
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    {foreach $hots as $hot}
+                    <li class="list-group-item"><a href="{:url('Index/Article/index')}/{$hot.id}">{$hot.title}</a></li>
+                    {/foreach}
+                </ul>
+            </div>
+        </div>
+        <div class="panel sidebar-item">
+            <div class="panel-heading">
+                最近更新
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    {foreach $latests as $latest}
+                    <li class="list-group-item"><a href="{:url('Index/Article/index')}/{$latest.id}">{$latest.title}</a></li>
+                    {/foreach}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

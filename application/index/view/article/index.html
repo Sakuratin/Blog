@@ -1,0 +1,214 @@
+{extend name="base" /}
+
+{block name="style"}
+<style>
+    .comments-count {
+        font-weight: 700;
+        padding: 5px 0;
+        border-bottom: 1px solid rgba(0,0,0,.05);
+        font-size: 13px;
+    }
+
+    #comments {
+        margin-top: 40px;
+        font-size: 16px;
+    }
+
+    .comment-text {
+        padding-left: 20px;
+    }
+
+    #comment-form {
+        font-size: 18px;
+        color: rgba(0,0,0,.44);
+        margin-top: 40px;
+    }
+
+    #comment-form label {
+        display: block;
+        margin-bottom: 3px;
+        cursor: pointer;
+    }
+
+    time {
+        color: rgba(0,0,0,.44);
+        font-style: italic;
+        font-size: 13px;
+        margin-left: 10px;
+    }
+
+    #comment-form>div {
+        margin-bottom: 10px;
+    }
+
+    #comment-form textarea {
+        resize: none;
+        width: 100%;
+        border: 1px rgba(0,0,0,.05) solid;
+        box-sizing: border-box;
+        padding: 10px;
+        border-radius: 3px;
+    }
+
+    #post-comment {
+        border: 2px solid #27ae60;
+        color: #27ae60;
+        background-color: #fff;
+        display: inline-block;
+        padding: 3px 15px;
+        border-radius: 3px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    #clickshare {
+        margin-left: 20px;
+        text-decoration: underline;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    #clickshare:hover {
+        color: rgb(251 200 199);
+    }
+
+    .sharetext {
+        width: 300px;
+        height: 50px;
+        background: rgb(251 200 199);
+        color: white;
+        position: fixed;
+        top: 45%;
+        left: 40%;
+        text-align: center;
+        line-height: 50px;
+    }
+    #clickshareCover {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: #cdcdcd8a;
+        top: 0;
+        left: 0;
+    }
+</style>
+{/block}
+{block name="main"}
+<div class="leave-header-margin full">
+    {if condition="!$isLock"}
+    <div id="post">
+        <h1 class="post-title">{$article.title}</h1>
+        <div class="post-date">
+            {$article.create_time} <a href="{:url('Index/Index/category')}/{$article.category}" style="color: #808080b0">#{$article.category}</a>
+
+            <span id="clickshare" >
+                分享文章
+                <textarea type="hidden" style="width: 0;height: 0;" id="sharevalue">赵婷婷的小窝 - {$article.title} {$Request.domain.$Request.url}</textarea>
+<!--                <img src="__STATIC__/images/share.png" width="30" height="30" style="position: relative;top:-2px" alt="">-->
+            </span>
+        </div>
+        <div class="post-content">
+            <p>{$article.html}</p>
+        </div>
+
+        <div id="comments">
+            <div class="comments-count">共有1条评论</div>
+            <div id="comment-list">
+
+                {foreach $comments as $comment}
+                <div class="comment-item">
+                    <div class="comment-nick">
+                        <b>{$comment.username}</b> <time>{$comment.create_time}</time>
+                        {if condition="$comment.username==$Request.session.user"}
+                        <a style="font-size: 13px;color: #d43f3a;text-decoration: underline"
+                           href="{:url('Index/Article/delcomment')}/{$comment.id}" onclick="return deleteComment()">删除</a>
+                        {else /}
+                        {/if}
+                    </div>
+
+                    <div class="comment-text">
+                        {$comment.comment}
+                    </div>
+                </div>
+                {/foreach}
+            </div>
+
+            <div id="comment-form">
+                <div>发表评论</div>
+                <form action="{:url('Index/Article/comment')}/{$article.id}" method="post">
+                    <label for="comment">评论</label>
+                    <textarea name="comment" id="comment" cols="45" rows="8"></textarea>
+                    <button id="post-comment">发表评论</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {else /}
+    <div id="post" style="position: relative;top: 70px">
+        <h1 class="post-title" >请输入该文章密码</h1>
+        <form action="{:url('Index/Article/index')}/{$article.id}"
+              method="post" style="text-align: center">
+            <input
+                    type="text" name="lock"
+                    value="" placeholder="输入正确的文章密码"
+                    style="width: 170px;height: 35px;border: none;border-bottom: 1px solid #808080f2;background: #ffffffa6;padding: 2px 6px;line-height: 35px;outline:none;"
+            />
+        </form>
+    </div>
+    {/if}
+
+</div>
+{/block}
+
+{block name="script"}
+<div style="width: 100%;height: 100%;z-index: -999;position: fixed;top:100px;left: 0" id="screen"></div>
+<script src="__STATIC__/js/BulletJs.min.js"></script>
+<script>
+
+    function deleteComment() {
+        return confirm("确认删除此评论？");
+
+    }
+
+    $("#post-comment").click(e => {
+
+    })
+    const screen = new BulletJs('#screen', {
+        trackHeight: 35
+    });
+
+    document.querySelectorAll(".comment-text").forEach(item => {
+        screen.push('<span style="color: #ff9896;font-size: 17px;z-index: 99">' + item.innerText + '</span>')
+    })
+    // screen.push("<span>222</span>")
+
+    $("#clickshare").click(() => {
+        // $("#clickshare").text("复制成功，粘贴分享给小伙伴吧！")
+        var content = '<div id="clickshareCover"><div class="sharetext">复制成功，粘贴分享给小伙伴吧</div></div>';
+        $("body").append(content);
+        document.getElementById("sharevalue").select()
+        document.execCommand("copy")
+
+
+        var timer = setTimeout(() => {
+            $(".sharetext").remove()
+            $("#clickshareCover").remove()
+        }, 3000)
+
+        $("#clickshareCover").click(() => {
+            // console.log("clickshareCover")
+            // 清除 timer
+            clearTimeout(timer)
+
+            $(".sharetext").remove()
+            $("#clickshareCover").remove()
+        })
+
+
+    })
+
+
+
+</script>
+{/block}
+

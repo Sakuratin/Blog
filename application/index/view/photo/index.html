@@ -1,0 +1,61 @@
+{extend name="base" /}
+
+{block name="style"}
+<style>
+
+    .cover {
+        height: 155px;
+    }
+
+    .photos {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: left;
+        margin-top: 120px;
+    }
+
+    .photo-name {
+        font-size: 1.5em;
+        text-align: center;
+    }
+
+    .photo {
+        margin-left: 25px;
+    }
+
+    .cover {
+        box-shadow: 1px 1px 1px 1px #ebebeb;
+        transition: 1s ease all;
+    }
+    .cover:hover {
+        height: 160px;
+        box-shadow: 4px 5px 5px 1px #ebebeb;
+        transition: 0.5s ease all;
+    }
+
+</style>
+{/block}
+{block name="main"}
+<div class="leave-header-margin full">
+    <div class="photos">
+        {foreach $categories as $item}
+        <a style="color: black" href="{:url('Index/Photo/photolist')}/{$item.id}" class="photo">
+            <img class="cover" src="__UPLOAD__/{$item.cover}" alt="">
+            <div class="photo-name">{$item.name}</div>
+        </a>
+        {/foreach}
+    </div>
+
+</div>
+{/block}
+
+{block name="script"}
+<div style="width: 100%;height: 100%;z-index: -999;position: fixed;top:100px;left: 0" id="screen"></div>
+<script src="__STATIC__/js/BulletJs.min.js"></script>
+<script>
+
+
+
+</script>
+{/block}
+

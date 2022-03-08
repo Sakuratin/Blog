@@ -1,0 +1,129 @@
+{extend name="base" /}
+
+{block name="style"}
+<style>
+    .photo {
+        height: 155px;
+        margin-bottom: 10px;
+    }
+
+    .photo-wrapper {
+        /*display: flex;*/
+        /*flex-wrap: wrap;*/
+        /*justify-content: left;*/
+    }
+
+    .photo-item {
+        display: inline-block;
+        position: relative;
+    }
+
+    .delete-img {
+        display: none;
+    }
+
+    .photo-item:hover .delete-img {
+        display: inline-block;
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        color: white;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+</style>
+{/block}
+
+{block name='photos'}active{/block}
+
+{block name="main"}
+<h2>相册管理</h2>
+<div>
+    <form name="fileup" action="{:url('Admin/Photo/upload')}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="pcid" value="{$pcid}" />
+        <input style="display: none" type="file" name="file" id="fileupload" />
+    </form>
+    <button class="btn post-button" id="create-post" href="#">添加照片</button>
+</div>
+<div class="post-operation clearfix">
+    <div class="left">
+        <ul class="pagination">
+            <li><a href="#">&laquo;</a></li>
+
+            {for start="1" end="$pages"}
+            <li><a href="#">{$i}</a></li>
+            {/for}
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </div>
+    <div class="right" id="search">
+    </div>
+</div>
+<!--<table class="table table-striped">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>序号</th>-->
+<!--        <th>分类标题</th>-->
+<!--        <th>创建时间</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    {foreach $data as $item}-->
+<!--    <tr class="article-item">-->
+<!--        <td>-->
+<!--            {$item.id}-->
+<!--        </td>-->
+<!--        <td>-->
+<!--            {$item.name}-->
+<!--        </td>-->
+<!--        <td>-->
+<!--            {$item.create_time}-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--    {/foreach}-->
+
+<!--    </tbody>-->
+<!--</table>-->
+<div class="photo-wrapper">
+    {foreach $data as $item}
+        <div class="photo-item">
+            <a class="delete-img" href="{:url('Admin/Photo/delete')}/{$item.id}">删除</a>
+            <img class="photo" src="__UPLOAD__/{$item.path}" alt="">
+        </div>
+    {/foreach}
+
+</div>
+{/block}
+{block name="script"}
+<script>
+
+    $("#fileupload").change(() => {
+        console.log("fileupload")
+        document.fileup.submit()
+
+        // var formData = new FormData();
+        // var files = $("#fileupload")[0].files[0];
+        // formData.append("file", formData)
+        // console.log(files)
+
+        // $.ajax({
+        //     url: "photoupload",
+        //     type: "POST",
+        //     data: formData,
+        //     success: function ()
+        // })
+    })
+
+    function deleteConfirm(id) {
+        if(confirm("确认删除该文章吗？")) {
+            location.href = "{:url('Admin/Photo/delete')}/" + id
+        }
+
+    }
+
+    $("#create-post").click(function (){
+        $("#fileupload").click()
+    })
+
+</script>
+{/block}
